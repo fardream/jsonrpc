@@ -1,13 +1,14 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/ybbus/jsonrpc)](https://goreportcard.com/report/github.com/ybbus/jsonrpc)
-[![GoDoc](https://godoc.org/github.com/ybbus/jsonrpc?status.svg)](https://godoc.org/github.com/ybbus/jsonrpc)
-[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
-[![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)  
-
 # JSON-RPC 2.0 Client for golang
+
+This is a fork of the unmerged pull request to [github.com/ybbus/jsonrpc/v2](https://github.com/ybbus/jsonrpc) (https://github.com/ybbus/jsonrpc/pull/39), which adds `context` support to the library.
+
+## Original Documentation Below
+
 A go implementation of an rpc client using json as data format over http.
 The implementation is based on the JSON-RPC 2.0 specification: http://www.jsonrpc.org/specification
 
 Supports:
+
 - requests with arbitrary parameters
 - convenient response retrieval
 - batch requests
@@ -21,6 +22,7 @@ go get -u github.com/ybbus/jsonrpc/v2
 ```
 
 ## Getting started
+
 Let's say we want to retrieve a person struct with a specific id using rpc-json over http.
 Then we want to save this person after we changed a property.
 (Error handling is omitted here)
@@ -181,7 +183,6 @@ rpcClient.Call("structWithNullField", struct {
 
 ### Working with rpc-json responses
 
-
 Before working with the response object, make sure to check err != nil.
 Also keep in mind that the json-rpc result field can be nil even on success.
 
@@ -196,6 +197,7 @@ func main() {
 ```
 
 If an http error occurred, maybe you are interested in the error code (403 etc.)
+
 ```go
 func main() {
     rpcClient := jsonrpc.NewClient("http://my-rpc-service:8080/rpc")
@@ -314,10 +316,12 @@ func main() {
 ```
 
 ### Using convenient function CallFor()
+
 A very handy way to quickly invoke methods and retrieve results is by using CallFor()
 
 You can directly provide an object where the result should be stored. Be sure to provide it be reference.
 An error is returned if:
+
 - there was an network / http error
 - RPCError object is not nil (err can be casted to this object)
 - rpc result could not be parsed into provided object
@@ -393,11 +397,13 @@ func main() {
 ```
 
 Keep the following in mind:
+
 - the request / response id's are important to map the requests to the responses. CallBatch() automatically sets the ids to requests[i].ID == i
 - the response can be provided in an unordered and maybe incomplete form
 - when you want to set the id yourself use, CallRaw()
 
 There are some helper methods for batch request results:
+
 ```
 func main() {
     // [...]
@@ -416,6 +422,7 @@ func main() {
 ```
 
 ### Raw functions
+
 There are also Raw function calls. Consider the non Raw functions first, unless you know what you are doing.
 You can create invalid json rpc requests and have to take care of id's etc. yourself.
 Also check documentation of Params() for raw requests.

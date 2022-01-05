@@ -1,4 +1,4 @@
-module github.com/ybbus/jsonrpc/v2
+module github.com/fardream/jsonrpc
 
 go 1.17
 
